@@ -1,4 +1,5 @@
 const MLB_CONFIG = {
+  SPREADSHEET_ID: 'PASTE_YOUR_GOOGLE_SHEET_ID_HERE',
   GITHUB_JSON_URL: 'https://raw.githubusercontent.com/MLB1111/Majorleague-vault/main/data/products.json',
   SITE_ASSET_BASE: 'https://mlb1111.github.io/Majorleague-vault/assets/products/',
   SHEET_PRODUCTS: 'Products',
@@ -19,7 +20,7 @@ function onOpen() {
 }
 
 function syncMajorleagueCatalogue() {
-  const ss = SpreadsheetApp.getActive();
+  const ss = SpreadsheetApp.openById(MLB_CONFIG.SPREADSHEET_ID);
   const productsSheet = getOrCreateSheet_(ss, MLB_CONFIG.SHEET_PRODUCTS, PRODUCT_HEADERS);
   const stockSheet = getOrCreateSheet_(ss, MLB_CONFIG.SHEET_STOCK, STOCK_HEADERS);
   getOrCreateSheet_(ss, MLB_CONFIG.SHEET_WEBSITE, WEBSITE_HEADERS);
