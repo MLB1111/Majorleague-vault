@@ -46,6 +46,14 @@ function renderFilters(){
   el.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{activeCategory=b.dataset.filter;renderFilters();renderProducts()})
 }
 
+function getVariants(p){
+  if(Array.isArray(p.Variants)) return p.Variants;
+  if(typeof p.Variants==="string"){
+    try{const parsed=JSON.parse(p.Variants);if(Array.isArray(parsed))return parsed}catch(e){}
+  }
+  return [];
+}
+
 function renderProducts(){
   const list=activeCategory==="All"?products:products.filter(p=>(p.Category||"").toLowerCase()===activeCategory.toLowerCase());
   const visible=list.filter(p=>String(p.Stock??"1").trim()!=="0"&&String(p.Active??"TRUE").toLowerCase()!=="false");
@@ -53,7 +61,11 @@ function renderProducts(){
   if(!visible.length){el.innerHTML='<div class="loading">No products available in this section.</div>';return}
   el.innerHTML=visible.map((p,i)=>{
     const img=productImage(p);
-    return '<article class="product"><div class="product-media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.Name)+'" loading="lazy" onerror="this.closest(\'.product-media\').classList.add(\'image-missing\')">':"")+(String(p.New).toLowerCase()==="true"||String(p.New)==="1"?'<span class="badge">NEW</span>':"")+'</div><div class="product-info"><h3>'+esc(p.Name)+'</h3><p>'+esc(p.Type||p.Category||"Majorleague")+'</p><div class="price">'+esc(p.Price?cfg.CURRENCY+p.Price:"Enquire")+'</div><button class="add" data-add="'+i+'">Add to cart</button></div></article>'
+    const variants=getVariants(p);
+    const variantMarkup=variants.length
+      ? '<div class="variants">'+variants.map(v=>'<button class="variant" type="button">'+esc(v.label||v.name||"Variant")+(v.price?'<span>'+esc(v.price)+'</span>':"")+'</button>').join("")+'</div>'
+      : "";
+    return '<article class="product"><div class="product-media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.Name)+'" loading="lazy" onerror="this.closest(\\'.product-media\\').classList.add(\\'image-missing\\')">':"")+(String(p.New).toLowerCase()==="true"||String(p.New)==="1"?'<span class="badge">NEW</span>':"")+'</div><div class="product-info"><h3>'+esc(p.Name)+'</h3><p>'+esc(p.Type||p.Category||"Majorleague")+'</p>'+variantMarkup+'<div class="price">'+esc(p.Price?cfg.CURRENCY+p.Price:"Enquire")+'</div><button class="add" data-add="'+i+'">Add to cart</button></div></article>'
   }).join("");
   el.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{cart.push(visible[+b.dataset.add]);renderCart()})
 }
