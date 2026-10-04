@@ -2,13 +2,83 @@ const cfg=window.MAJORLEAGUE_CONFIG;
 const categories=["Flower","Hash","Extracts","Edibles","Accessories","Special Offers"];
 let products=[],cart=[],activeCategory="All";
 const $=s=>document.querySelector(s);
+
 function esc(v){return String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function csv(t){const lines=t.trim().split(/\r?\n/);if(!lines.length)return[];const h=lines.shift().split(",").map(x=>x.trim());return lines.map(l=>{const a=l.split(",");return Object.fromEntries(h.map((k,i)=>[k,(a[i]||"").trim().replace(/^"|"$/g,"")]))})}
-function renderCategories(){const el=$("#categories");el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+c+'"><img class="category-logo" src="assets/majorleague-logo.webp" alt="" aria-hidden="true"><strong>'+c.toUpperCase()+'</strong><span class="arrow">→</span></button>').join("");el.onclick=e=>{const b=e.target.closest(".category");if(!b)return;activeCategory=b.dataset.cat;$("#shop").scrollIntoView({behavior:"smooth"});renderFilters();renderProducts()}}
-function renderFilters(){const el=$("#filters");el.innerHTML=["All",...categories].map(c=>'<button class="filter '+(activeCategory===c?"active":"")+'" data-filter="'+c+'">'+c+"</button>").join("");el.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{activeCategory=b.dataset.filter;renderFilters();renderProducts()})}
-function renderProducts(){const list=activeCategory==="All"?products:products.filter(p=>(p.Category||"").toLowerCase()===activeCategory.toLowerCase());const visible=list.filter(p=>String(p.Stock||"1")!=="0");const el=$("#products");if(!visible.length){el.innerHTML='<div class="loading">No products loaded yet. Add your Google Sheet CSV URL in js/config.js.</div>';return}el.innerHTML=visible.map((p,i)=>'<article class="product"><div class="product-media">'+(p.ImageURL?'<img src="'+esc(p.ImageURL)+'" alt="'+esc(p.Name)+'" loading="lazy">':"")+(String(p.New).toLowerCase()==="true"||String(p.New)==="1"?'<span class="badge">NEW</span>':"")+'</div><div class="product-info"><h3>'+esc(p.Name)+'</h3><p>'+esc(p.Type||p.Category||"Majorleague")+'</p><div class="price">'+esc(p.Price?cfg.CURRENCY+p.Price:"Enquire")+'</div><button class="add" data-add="'+i+'">Add to cart</button></div></article>').join("");el.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{cart.push(visible[+b.dataset.add]);renderCart()})}
-function renderCart(){const count=cart.length;$("#cartCount").textContent=count;$("#bottomCartCount").textContent=count;const el=$("#cartItems");el.innerHTML=count?cart.map((p,i)=>'<div class="cart-row"><span>'+esc(p.Name)+'</span><button data-remove="'+i+'">×</button></div>').join(""):'<p class="note">Your cart is empty.</p>';el.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);renderCart()});$("#cartTotal").textContent=count?count+" item"+(count===1?"":"s")+" — enquiry total shown on request":""}
-async function load(){renderCategories();renderFilters();try{if(!cfg.GOOGLE_SHEET_CSV_URL)throw Error("no sheet");const r=await fetch(cfg.GOOGLE_SHEET_CSV_URL);products=csv(await r.text())}catch(e){products=[]}renderProducts();renderCart()}
+
+function parseCSV(text){
+  const rows=[]; let row=[], cell="", quoted=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(c==='"'){
+      if(quoted && n==='"'){cell+='"';i++}
+      else quoted=!quoted;
+    }else if(c===","&&!quoted){row.push(cell.trim());cell=""}
+    else if((c==="\n"||c==="\r")&&!quoted){
+      if(c==="\r"&&n==="\n")i++;
+      row.push(cell.trim());cell="";
+      if(row.some(v=>v!==""))rows.push(row);
+      row=[];
+    }else cell+=c;
+  }
+  if(cell!==""||row.length){row.push(cell.trim());if(row.some(v=>v!==""))rows.push(row)}
+  if(!rows.length)return[];
+  const headers=rows.shift().map(h=>h.trim());
+  return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,(r[i]??"").trim()])));
+}
+
+function productImage(p){
+  if(p.ImageURL)return p.ImageURL;
+  if(p.ProductID){
+    return "assets/products/"+encodeURIComponent(p.ProductID)+".webp";
+  }
+  return "";
+}
+
+function renderCategories(){
+  const el=$("#categories");
+  el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'"><img class="category-logo" src="assets/majorleague-logo.webp" alt="" aria-hidden="true"><strong>'+c.toUpperCase()+'</strong><span class="arrow">→</span></button>').join("");
+  el.onclick=e=>{const b=e.target.closest(".category");if(!b)return;activeCategory=b.dataset.cat;$("#shop").scrollIntoView({behavior:"smooth"});renderFilters();renderProducts()}
+}
+
+function renderFilters(){
+  const el=$("#filters");
+  el.innerHTML=["All",...categories].map(c=>'<button class="filter '+(activeCategory===c?"active":"")+'" data-filter="'+esc(c)+'">'+esc(c)+"</button>").join("");
+  el.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{activeCategory=b.dataset.filter;renderFilters();renderProducts()})
+}
+
+function renderProducts(){
+  const list=activeCategory==="All"?products:products.filter(p=>(p.Category||"").toLowerCase()===activeCategory.toLowerCase());
+  const visible=list.filter(p=>String(p.Stock??"1").trim()!=="0"&&String(p.Active??"TRUE").toLowerCase()!=="false");
+  const el=$("#products");
+  if(!visible.length){el.innerHTML='<div class="loading">No products available in this section.</div>';return}
+  el.innerHTML=visible.map((p,i)=>{
+    const img=productImage(p);
+    return '<article class="product"><div class="product-media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.Name)+'" loading="lazy" onerror="this.closest(\'.product-media\').classList.add(\'image-missing\')">':"")+(String(p.New).toLowerCase()==="true"||String(p.New)==="1"?'<span class="badge">NEW</span>':"")+'</div><div class="product-info"><h3>'+esc(p.Name)+'</h3><p>'+esc(p.Type||p.Category||"Majorleague")+'</p><div class="price">'+esc(p.Price?cfg.CURRENCY+p.Price:"Enquire")+'</div><button class="add" data-add="'+i+'">Add to cart</button></div></article>'
+  }).join("");
+  el.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{cart.push(visible[+b.dataset.add]);renderCart()})
+}
+
+function renderCart(){
+  const count=cart.length;
+  $("#cartCount").textContent=count;
+  $("#bottomCartCount").textContent=count;
+  const el=$("#cartItems");
+  el.innerHTML=count?cart.map((p,i)=>'<div class="cart-row"><span>'+esc(p.Name)+'</span><button data-remove="'+i+'">×</button></div>').join(""):'<p class="note">Your cart is empty.</p>';
+  el.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);renderCart()});
+  $("#cartTotal").textContent=count?count+" item"+(count===1?"":"s")+" — enquiry total shown on request":""
+}
+
+async function load(){
+  renderCategories();renderFilters();
+  try{
+    if(!cfg.GOOGLE_SHEET_CSV_URL)throw Error("no sheet");
+    const r=await fetch(cfg.GOOGLE_SHEET_CSV_URL,{cache:"no-store"});
+    if(!r.ok)throw Error("sheet "+r.status);
+    products=parseCSV(await r.text());
+  }catch(e){products=[]}
+  renderProducts();renderCart()
+}
+
 function openPanel(n){const p=$("#"+n+"Panel");p.classList.add("open");p.setAttribute("aria-hidden","false");if(n==="search")$("#searchInput").focus()}
 function closePanels(){document.querySelectorAll(".panel.open").forEach(p=>{p.classList.remove("open");p.setAttribute("aria-hidden","true")})}
 document.querySelectorAll("[data-panel]").forEach(b=>b.onclick=()=>openPanel(b.dataset.panel));
