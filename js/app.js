@@ -71,10 +71,10 @@ function renderCart(){
 async function load(){
   renderCategories();renderFilters();
   try{
-    if(!cfg.GOOGLE_SHEET_CSV_URL)throw Error("no sheet");
-    const r=await fetch(cfg.GOOGLE_SHEET_CSV_URL,{cache:"no-store"});
-    if(!r.ok)throw Error("sheet "+r.status);
-    products=parseCSV(await r.text());
+    const r=await fetch(cfg.CATALOGUE_URL,{cache:"no-store"});
+    if(!r.ok)throw Error("catalogue "+r.status);
+    const data=await r.json();
+    products=Array.isArray(data)?data:[];
   }catch(e){products=[]}
   renderProducts();renderCart()
 }
