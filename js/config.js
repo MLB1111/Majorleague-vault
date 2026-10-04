@@ -1,0 +1,1 @@
+window.MAJORLEAGUE_CONFIG={GOOGLE_SHEET_CSV_URL:"",CURRENCY:"£",HERO_VIDEO:"assets/hero.mp4"};
