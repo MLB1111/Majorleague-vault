@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "ProductID": "ML-DEMO-001",
+    "Name": "Example Product",
+    "Category": "Flower",
+    "Type": "Indoor",
+    "Price": "40",
+    "New": true,
+    "Featured": false,
+    "Active": false,
+    "Stock": 0
+  }
+]
