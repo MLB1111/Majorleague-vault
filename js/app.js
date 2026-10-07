@@ -36,7 +36,7 @@ function productImage(p){
 
 function renderCategories(){
   const el=$("#categories");
-  el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'"><img class="category-logo" src="assets/majorleague-logo.webp" alt="" aria-hidden="true"><strong>'+c.toUpperCase()+'</strong><span class="arrow">→</span></button>').join("");
+  el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'" aria-label="'+esc(c)+'"><img class="category-art" src="assets/majorleague-category-panels.webp" alt=""></button>').join("");
   el.onclick=e=>{const b=e.target.closest(".category");if(!b)return;activeCategory=b.dataset.cat;$("#shop").scrollIntoView({behavior:"smooth"});renderFilters();renderProducts()}
 }
 
