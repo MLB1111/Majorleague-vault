@@ -34,12 +34,20 @@ function productImage(p){
   return "";
 }
 
-function renderCategories(){
+async function renderCategories(){
   const el=$("#categories");
-  el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'" aria-label="'+esc(c)+'"><img class="category-art" src="assets/majorleague-category-panels.jpg" alt=""></button>').join("");
+  el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'" aria-label="'+esc(c)+'"><img class="category-art" alt=""></button>').join("");
+  try{
+    const r=await fetch("assets/majorleague-category-panels.b64?v=1",{cache:"no-store"});
+    if(!r.ok)throw Error("category artwork "+r.status);
+    const raw=atob((await r.text()).trim());
+    const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+    const url=URL.createObjectURL(new Blob([bytes],{type:"image/jpeg"}));
+    el.querySelectorAll(".category-art").forEach(img=>{img.src=url});
+  }catch(e){}
   el.onclick=e=>{const b=e.target.closest(".category");if(!b)return;activeCategory=b.dataset.cat;$("#shop").scrollIntoView({behavior:"smooth"});renderFilters();renderProducts()}
 }
-
 function renderFilters(){
   const el=$("#filters");
   el.innerHTML=["All",...categories].map(c=>'<button class="filter '+(activeCategory===c?"active":"")+'" data-filter="'+esc(c)+'">'+esc(c)+"</button>").join("");
