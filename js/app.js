@@ -38,7 +38,7 @@ async function renderCategories(){
   const el=$("#categories");
   el.innerHTML=categories.map(c=>'<button class="category" data-cat="'+esc(c)+'" aria-label="'+esc(c)+'"><img class="category-art" alt=""></button>').join("");
   try{
-    const r=await fetch("assets/majorleague-category-panels.b64?v=1",{cache:"no-store"});
+    const r=await fetch("assets/majorleague-category-panels.txt?v=1",{cache:"no-store"});
     if(!r.ok)throw Error("category artwork "+r.status);
     const raw=atob((await r.text()).trim());
     const bytes=new Uint8Array(raw.length);
