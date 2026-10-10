@@ -1,3 +1,4 @@
+# Verify GitHub Pages publishing through this Actions workflow.
 name: Deploy Majorleague
 on:
   push:
