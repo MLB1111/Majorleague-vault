@@ -1,1 +1,0 @@
-majorleague category artwork
