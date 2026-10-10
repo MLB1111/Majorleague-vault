@@ -39,7 +39,7 @@ jobs:
           # published copy. Each deployment gets fresh URLs, so browsers
           # cannot reuse cached copies of old assets under the same URL.
           targets = {".html", ".css", ".js"}
-          asset = re.compile(r"((?:styles\\.css|app\\.js|stock\\.js|assets/[A-Za-z0-9_./-]+))(?:\\?v=[^\\s\"' )<>]*)?")
+          asset = re.compile(r"((?:styles\.css|app\.js|stock\.js|assets/[A-Za-z0-9_./-]+))(?:\?v=[^\s\"' )<>]*)?")
           for path in Path(".").rglob("*"):
               if not path.is_file() or path.suffix.lower() not in targets:
                   continue
