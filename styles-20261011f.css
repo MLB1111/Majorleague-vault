@@ -48,3 +48,14 @@ a.cat,
   clip-path: inset(5% 2% 7% 2%) !important;
   transform: scale(1.08) !important;
 }
+
+/* Flower category strain library */
+.products.strain-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.strain-card{background:#080808;border:1px solid #292929;overflow:hidden;min-width:0}
+.strain-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#111}
+.strain-copy{padding:16px}
+.strain-copy h2{font:clamp(21px,3vw,30px) Anton;margin:0 0 12px;color:#fff}
+.strain-copy span{display:block;font-size:9px;letter-spacing:.18em;color:#777;margin-bottom:7px}
+.strain-copy p{font-size:12px;line-height:1.6;color:#c7c7c7;margin:0}
+@media(max-width:700px){.products.strain-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.strain-copy{padding:12px}.strain-copy h2{font-size:22px}}
+@media(max-width:420px){.products.strain-grid{grid-template-columns:1fr}.strain-card img{aspect-ratio:5/4}}
