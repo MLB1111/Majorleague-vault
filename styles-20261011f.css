@@ -62,4 +62,4 @@ a.cat,
 
 /* Crop embedded lettering out of strain photos and zoom the flower image to fill each card. */
 .strain-card{overflow:hidden}
-.strain-card img{transform:scale(2.35) translateY(18%);transform-origin:center center;object-fit:cover}
+.strain-card img{transform:scale(1.32) translateY(-8%);transform-origin:center center;object-fit:cover;object-position:center top}
