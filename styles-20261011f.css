@@ -60,6 +60,3 @@ a.cat,
 @media(max-width:700px){.products.strain-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.strain-copy{padding:12px}.strain-copy h2{font-size:22px}}
 @media(max-width:420px){.products.strain-grid{grid-template-columns:1fr}.strain-card img{aspect-ratio:5/4}}
 
-/* Crop embedded lettering out of strain photos and zoom the flower image to fill each card. */
-.strain-card{overflow:hidden}
-.strain-card img{transform:scale(1.32) translateY(-8%);transform-origin:center center;object-fit:cover;object-position:center top}
