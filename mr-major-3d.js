@@ -7,8 +7,8 @@
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x080909);
   scene.fog = new THREE.Fog(0x080909, 8, 19);
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-  camera.position.set(0, 2.65, 9.6);
+  const camera = new THREE.PerspectiveCamera(31, 1, 0.1, 100);
+  camera.position.set(0, 2.72, 10.4);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.shadowMap.enabled = true;
@@ -28,7 +28,7 @@
   const black = mat(0x111213, .88), cloth = mat(0x191a1b, .95), seam = mat(0x303233, .9);
   const green = mat(0x00b982, .55), white = mat(0xf2f0e8, .48), sole = mat(0xe8e6df, .65);
   const gold = mat(0xb9914d, .32, .72), blue = mat(0x079bff, .2, .15);
-  const skin = mat(0xd8c6ae, .82), skinLight = mat(0xe9d8c1, .8), dark = mat(0x07090b, .35);
+  const skin = mat(0xd8c6ae, .9), skinLight = mat(0xe9d8c1, .86), skinShade = mat(0xbba58b, .95), dark = mat(0x07090b, .35);
   const root = new THREE.Group(); scene.add(root);
   const mascot = new THREE.Group(); root.add(mascot);
 
@@ -93,9 +93,9 @@
   // Head: base plus irregular cloud/brain-like puffs
   sphere(mascot,skin,0,3.05,.02,.91,.77,.66);
   const rng=(a,b)=>a+Math.random()*(b-a);
-  for(let i=0;i<44;i++){
+  for(let i=0;i<62;i++){
     const angle=i*Math.PI*(3-Math.sqrt(5));
-    const y=1-(i/43)*2;
+    const y=1-(i/61)*2;
     const rr=Math.sqrt(1-y*y);
     const x=Math.cos(angle)*rr, z=Math.sin(angle)*rr;
     sphere(mascot,i%4===0?skinLight:skin,x*.83,3.06+y*.67,.03+z*.56,
@@ -103,22 +103,22 @@
   }
   // eyes, brows, nose and confident smirk on front (+Z)
   for(const side of [-1,1]){
-    sphere(mascot,white,side*.34,3.12,.59,.28,.19,.105);
-    sphere(mascot,blue,side*.34,3.12,.684,.145,.14,.045);
+    sphere(mascot,white,side*.34,3.12,.605,.285,.17,.105);
+    sphere(mascot,blue,side*.34,3.105,.698,.145,.125,.045);
     sphere(mascot,dark,side*.34,3.12,.718,.072,.09,.025);
     sphere(mascot,white,side*.38,3.17,.74,.035,.035,.014);
-    const brow=sphere(mascot,skinLight,side*.34,3.37,.58,.34,.12,.12); brow.rotation.z=side*-.08;
+    const brow=sphere(mascot,skinLight,side*.34,3.34,.61,.36,.16,.13); brow.rotation.z=side*-.10;\n    const lid=sphere(mascot,skin,side*.34,3.205,.684,.27,.075,.055); lid.rotation.z=side*-.035;
   }
-  sphere(mascot,skinLight,0,2.91,.67,.18,.12,.12);
+  sphere(mascot,skinLight,0,2.91,.69,.19,.125,.13);\n  // subtle cheek folds reinforce the original cloud-textured sculpted face\n  for(const side of [-1,1]){\n    for(let j=0;j<3;j++){const fold=sphere(mascot,skinShade,side*(.48+j*.045),2.91-j*.075,.605-j*.012,.055,.018,.012);fold.rotation.z=side*-.28;}\n  }
   // smirk curve
   const smilePts=[new THREE.Vector3(-.28,2.78,.685),new THREE.Vector3(-.14,2.74,.72),new THREE.Vector3(.02,2.74,.73),new THREE.Vector3(.2,2.77,.69),new THREE.Vector3(.28,2.81,.66)];
   const smile= new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(smilePts),24,.022,8,false),dark); mascot.add(smile);
   // bucket hat brim and crown
-  cylinder(mascot,black,0,3.69,.01,.99,.86,.13,48);
-  cylinder(mascot,cloth,0,3.91,.01,.67,.7,.48,48);
+  cylinder(mascot,black,0,3.69,.01,1.03,.88,.14,48);
+  cylinder(mascot,cloth,0,3.91,.01,.69,.72,.49,48);
   cylinder(mascot,seam,0,3.68,.01,.71,.71,.035,48);
   // logo on hat front
-  const hatLogo=mesh(new THREE.PlaneGeometry(.72,.22),logoMat,mascot,0,3.91,.688);
+  const hatLogo=mesh(new THREE.PlaneGeometry(.76,.235),logoMat,mascot,0,3.92,.704);
   // tiny hat stitch accents
   for(let i=-2;i<=2;i++){
     const st=mesh(new THREE.BoxGeometry(.11,.025,.012),seam,mascot,i*.25,3.65,.79);
