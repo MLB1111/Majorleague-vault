@@ -39,6 +39,34 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
       model.position.sub(center);
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
       model.scale.setScalar(2.05 / maxDim);
+      // Improve surface shading and repair decal orientation without altering logo artwork.
+      model.traverse(node => {
+        if (!node.isMesh) return;
+        if (node.geometry && node.geometry.attributes && node.geometry.attributes.position) {
+          node.geometry.computeVertexNormals();
+        }
+        if (/Majorleague_(hat|chest|jogger)_logo/i.test(node.name)) {
+          const uv = node.geometry && node.geometry.attributes && node.geometry.attributes.uv;
+          if (uv && !node.userData.mrMajorUvFixed) {
+            for (let i = 0; i < uv.count; i++) uv.setY(i, 1 - uv.getY(i));
+            uv.needsUpdate = true;
+            node.userData.mrMajorUvFixed = true;
+          }
+          const mats = Array.isArray(node.material) ? node.material : [node.material];
+          mats.forEach(mat => {
+            if (mat) { mat.side = THREE.DoubleSide; mat.transparent = true; mat.depthWrite = false; mat.needsUpdate = true; }
+          });
+        } else {
+          const mats = Array.isArray(node.material) ? node.material : [node.material];
+          mats.forEach(mat => {
+            if (mat && mat.isMeshStandardMaterial) {
+              mat.roughness = Math.max(mat.roughness || 0, 0.68);
+              mat.metalness = Math.min(mat.metalness || 0, 0.08);
+              mat.needsUpdate = true;
+            }
+          });
+        }
+      });
       root.add(model);
       camera.position.set(0, .02, 4.75);
       camera.fov = 36;
