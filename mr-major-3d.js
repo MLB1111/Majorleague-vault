@@ -40,23 +40,13 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
       model.scale.setScalar(2.05 / maxDim);
       root.add(model);
-      camera.position.set(0, .02, 4.35);
-      camera.fov = 34;
+      camera.position.set(0, .02, 4.75);
+      camera.fov = 36;
       camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
       floor.position.y = -(size.y * model.scale.y * .5) - .025;
-      // Replace the failed checkerboard/placeholder decals with the exact site logo artwork.
-      const logoLoader = new THREE.TextureLoader();
-      logoLoader.load('assets/majorleague-logo.webp', texture => {
-        texture.colorSpace = THREE.SRGBColorSpace;
-        texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
-        model.traverse(node => {
-          if (!node.isMesh || !/Majorleague_(hat|chest|jogger)_logo/i.test(node.name)) return;
-          const material = new THREE.MeshBasicMaterial({map:texture, transparent:true, alphaTest:0.08, side:THREE.DoubleSide, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-2});
-          node.material = material;
-          node.renderOrder = 2;
-        });
-      });
+      // Keep the exact logo textures embedded in the GLB. Replacing these with
+      // the header logo distorted the clothing marks and made the hat mark appear inverted.
       status.remove();
     }, undefined, () => {
       status.textContent = 'Mr Major model not found. Upload assets/mr-major-majorleague-refined.glb to the repository.';
