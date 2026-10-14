@@ -8,21 +8,20 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x080909);
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 1.25, 4.8);
+  camera.position.set(0, 0.02, 4.55);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.physicallyCorrectLights = true;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 1.25;
   host.appendChild(renderer.domElement);
-  scene.add(new THREE.HemisphereLight(0xe7efff, 0x17110d, 2.0));
-  const key = new THREE.DirectionalLight(0xffffff, 3.0); key.position.set(3, 6, 5); scene.add(key);
-  const rim = new THREE.PointLight(0x00d7a0, 16, 9); rim.position.set(-3, 2.5, -3); scene.add(rim);
-  const fill = new THREE.PointLight(0x9abaff, 5, 8); fill.position.set(3, 1.5, 3); scene.add(fill);
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(200,200), new THREE.MeshStandardMaterial({color:0x080909,roughness:.95}));
-  floor.rotation.x = -Math.PI/2; floor.position.y = -1.02; scene.add(floor);
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(.72,.009,8,80), new THREE.MeshStandardMaterial({color:0x00bd86,metalness:.25,roughness:.45}));
-  ring.rotation.x = Math.PI/2; ring.position.y = -1.0; scene.add(ring);
+  scene.add(new THREE.HemisphereLight(0xf2f5ff, 0x18191b, 2.6));
+  const key = new THREE.DirectionalLight(0xffffff, 4.2); key.position.set(3, 6, 5); scene.add(key);
+  const rim = new THREE.PointLight(0x00bd86, 8, 9); rim.position.set(-3, 2.5, -3); scene.add(rim);
+  const fill = new THREE.PointLight(0xd7e0ed, 3.5, 8); fill.position.set(3, 1.5, 3); scene.add(fill);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(200,200), new THREE.MeshStandardMaterial({color:0x080909,roughness:1}));
+  floor.rotation.x = -Math.PI/2; floor.position.y = -1.22; scene.add(floor);
   const root = new THREE.Group(); scene.add(root);
   const status = document.createElement('p');
   status.className = 'mr-major-load-status'; status.textContent = 'Loading Mr Major…';
@@ -39,12 +38,25 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
       const center = box.getCenter(new THREE.Vector3());
       model.position.sub(center);
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
-      model.scale.setScalar(2.35 / maxDim);
+      model.scale.setScalar(2.05 / maxDim);
       root.add(model);
-      camera.position.set(0, .05, 3.8);
+      camera.position.set(0, .02, 4.35);
+      camera.fov = 34;
       camera.lookAt(0, 0, 0);
-      floor.position.y = -(size.y * model.scale.y * .5) - .08;
-      ring.position.y = floor.position.y + .015;
+      camera.updateProjectionMatrix();
+      floor.position.y = -(size.y * model.scale.y * .5) - .025;
+      // Replace the failed checkerboard/placeholder decals with the exact site logo artwork.
+      const logoLoader = new THREE.TextureLoader();
+      logoLoader.load('assets/majorleague-logo.webp', texture => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+        model.traverse(node => {
+          if (!node.isMesh || !/Majorleague_(hat|chest|jogger)_logo/i.test(node.name)) return;
+          const material = new THREE.MeshBasicMaterial({map:texture, transparent:true, alphaTest:0.08, side:THREE.DoubleSide, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-2});
+          node.material = material;
+          node.renderOrder = 2;
+        });
+      });
       status.remove();
     }, undefined, () => {
       status.textContent = 'Mr Major model not found. Upload assets/mr-major-majorleague-refined.glb to the repository.';
