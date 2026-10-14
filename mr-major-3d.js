@@ -1,9 +1,10 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 /* Majorleague Vault — Mr Major GLB viewer.
    Loads the supplied character asset and provides drag/swipe, slider, arrows and auto-rotation. */
 (() => {
   const host = document.getElementById('mrMajorStage');
-  if (!host || !window.THREE) return;
-  const THREE = window.THREE;
+  if (!host) return;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x080909);
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -29,8 +30,8 @@
   let dragging = false, lastX = 0, rotation = 0, autoRotate = true;
   const slider = document.getElementById('mrMajorRotate');
   const setRotation = v => { rotation = v; root.rotation.y = v; if (slider) slider.value = String(Math.round(((v%(Math.PI*2)+Math.PI*2)%(Math.PI*2))/(Math.PI*2)*100)); };
-  if (THREE.GLTFLoader) {
-    const loader = new THREE.GLTFLoader();
+  {
+    const loader = new GLTFLoader();
     loader.load('assets/mr-major-majorleague-refined.glb', gltf => {
       const model = gltf.scene;
       const box = new THREE.Box3().setFromObject(model);
@@ -49,9 +50,6 @@
       status.textContent = 'Mr Major model not found. Upload assets/mr-major-majorleague-refined.glb to the repository.';
       status.classList.add('is-error');
     });
-  } else {
-    status.textContent = '3D viewer library did not load. Please refresh the page.';
-    status.classList.add('is-error');
   }
   const canvas = renderer.domElement;
   canvas.addEventListener('pointerdown', e => { dragging=true; autoRotate=false; lastX=e.clientX; canvas.setPointerCapture(e.pointerId); canvas.style.cursor='grabbing'; });
