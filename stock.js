@@ -11,11 +11,11 @@
 const STORE = {
   currency: "£",
   categories: [
-    { id: "flower", name: "FLOWER", image: "assets/categories/IMG_8675-v20261011.webp" },
-    { id: "extracts", name: "EXTRACTS", image: "assets/categories/IMG_8682-v20261011.jpeg" },
-    { id: "edibles", name: "EDIBLES", image: "assets/categories/IMG_8683-v20261011.jpeg" },
-    { id: "accessories", name: "ACCESSORIES", image: "assets/categories/IMG_8684-v20261011.jpeg" },
-    { id: "special-offers", name: "SPECIAL OFFERS", image: "assets/categories/IMG_8685-v20261011.jpeg" }
+    { id: "flower", name: "FLOWER", image: "assets/category-flower-20261015.jpeg" },
+    { id: "extracts", name: "EXTRACTS", image: "assets/category-extracts-20261015.jpeg" },
+    { id: "edibles", name: "EDIBLES", image: "assets/category-edibles-20261015.jpeg" },
+    { id: "accessories", name: "ACCESSORIES", image: "assets/category-accessories-20261015.jpeg" },
+    { id: "special-offers", name: "SPECIAL OFFERS", image: "assets/category-special-offers-20261015.jpeg" }
   ],
   strainLibrary: [
     { id: "chem-lato", name: "Chem-lato", lineage: "Gelato #33 × 707 Chemdawg", image: "assets/chem-lato.jpg" },
