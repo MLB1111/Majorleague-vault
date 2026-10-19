@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#000">
+<title>Example Pricing — Majorleague Vault</title>
+<style>
+:root{color-scheme:dark;--gold:#c9a33b;--gold-light:#e1bd62;--bg:#080808;--muted:#b9b9b9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(18px,4vw,48px);border-bottom:1px solid #252525}
+.logo{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.back{color:var(--gold-light);text-decoration:none;border:1px solid var(--gold);padding:10px 14px;font-size:12px;letter-spacing:.08em}
+main{width:min(760px,calc(100% - 32px));margin:clamp(28px,7vw,72px) auto}
+.kicker{text-align:center;color:var(--gold-light);font-size:11px;letter-spacing:.22em;margin:0 0 12px}
+h1{text-align:center;font-size:clamp(28px,6vw,44px);letter-spacing:.04em;margin:0 0 12px}
+.intro{text-align:center;color:var(--muted);font-size:14px;line-height:1.6;margin:0 auto 30px;max-width:480px}
+.panel{border:1px solid var(--gold);padding:clamp(18px,4vw,30px);background:linear-gradient(145deg,#101010,#060606)}
+.panel h2{text-align:center;font-size:14px;letter-spacing:.18em;margin:0 0 8px}
+.panel .note{text-align:center;color:var(--muted);font-size:12px;margin:0 0 22px}
+.rows{display:grid;grid-template-columns:1fr;gap:0}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 2px;border-bottom:1px solid #282828}
+.price-row:last-child{border-bottom:0}
+.amount{font-size:15px}
+.price{font-size:17px;font-weight:700;color:var(--gold-light);font-variant-numeric:tabular-nums}
+footer{text-align:center;color:#777;font-size:11px;line-height:1.6;margin:24px 0 0}
+@media(min-width:560px){.rows{grid-template-columns:1fr 1fr;column-gap:30px}.price-row:nth-last-child(-n+2){border-bottom:0}.price-row:nth-child(odd):nth-last-child(2){border-bottom:0}}
+</style>
+</head>
+<body>
+<header><a class="logo" href="index.html" aria-label="Majorleague Vault home">MAJORLEAGUE VAULT</a><a class="back" href="index.html">BACK TO VAULT</a></header>
+<main>
+<p class="kicker">REFERENCE PAGE</p>
+<h1>EXAMPLE PRICING</h1>
+<p class="intro">A standalone, non-transactional demonstration of a premium black-and-gold pricing layout.</p>
+<section class="panel" aria-label="Example pricing table">
+<h2>ILLUSTRATIVE PRICE LIST</h2>
+<p class="note">Sample entries only · No checkout or payment links</p>
+<div class="rows">
+<div class="price-row"><span class="amount">Sample size 1</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 2</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 3</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 4</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 5</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 6</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 7</span><span class="price">£—</span></div>
+<div class="price-row"><span class="amount">Sample size 8</span><span class="price">£—</span></div>
+</div>
+</section>
+<footer>Demonstration layout only. No products are offered or sold on this page.</footer>
+</main>
+</body>
+</html>
