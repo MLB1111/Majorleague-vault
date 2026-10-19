@@ -22,10 +22,8 @@ const STORE = {
     { id: "galactic-runtz", name: "Galactic Runtz", lineage: "Falcon 9 × Runtz", image: "assets/galactic-runtz.jpg" },
     { id: "glitter-bomb", name: "Glitter Bomb", lineage: "GAS #10 × OGKB Headband", image: "assets/glitter-bomb.jpg" },
     { id: "frozen-cherries", name: "Frozen Cherries", lineage: "Lemon Cherry Gelato × Curelato × Runtz", image: "assets/frozen-cherries.jpg" },
-    { id: "fruit-loopz", name: "Fruit LoopZ", lineage: "Blueberry × White Widow", image: "assets/fruit-loopz.jpg" },
     { id: "white-walker-og", name: "White Walker OG", lineage: "SFV OG Kush phenotype", image: "assets/white-walker-og.jpg" },
     { id: "frosted-fruit-cakes", name: "Frosted Fruit Cakes", lineage: "Fruity Pebbles OG × Wedding Cake", image: "assets/frosted-fruit-cakes.jpg" },
-    { id: "orion", name: "ORION", lineage: "Blue Mammoth × Blue Dream", image: "assets/orion.jpg" }
   ],
   products: [
     // Add real products here. Keep each id unique.
