@@ -27,7 +27,8 @@ const STORE = {
   ],
   libraries: {
     extracts: [
-      { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "https://mlb1111.github.io/Majorleague-vault/assets/blueberry-zkunk-live-resin.jpeg?v=20261023b", label: "EXTRACT PROFILE" }
+      { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "https://mlb1111.github.io/Majorleague-vault/assets/blueberry-zkunk-live-resin.jpeg?v=20261023b", label: "EXTRACT PROFILE" },
+      { id: "original-z-live-resin-soil-grown", name: "Original Z Live Resin", lineage: "Soil Grown", image: "assets/original-z-live-resin-soil-grown.jpeg", label: "EXTRACT PROFILE" }
     ],
     edibles: [],
     accessories: [],
