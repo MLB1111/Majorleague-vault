@@ -25,6 +25,14 @@ const STORE = {
     { id: "white-walker-og", name: "White Walker OG", lineage: "SFV OG Kush phenotype", image: "assets/white-walker-og.jpg" },
     { id: "frosted-fruit-cakes", name: "Frosted Fruit Cakes", lineage: "Fruity Pebbles OG × Wedding Cake", image: "assets/frosted-fruit-cakes.jpg" },
   ],
+  libraries: {
+    extracts: [
+      { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "", label: "EXTRACT PROFILE" }
+    ],
+    edibles: [],
+    accessories: [],
+    "special-offers": []
+  },
   products: [
     // Add real products here. Keep each id unique.
     // Required fields: id, category, name, price, image, available
