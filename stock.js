@@ -27,7 +27,7 @@ const STORE = {
   ],
   libraries: {
     extracts: [
-      { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "assets/blueberry-zkunk-live-resin.jpeg", label: "EXTRACT PROFILE" }
+      { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "assets/blueberry-zkunk-live-resin.jpeg?v=20261023a", label: "EXTRACT PROFILE" }
     ],
     edibles: [],
     accessories: [],
