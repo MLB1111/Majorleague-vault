@@ -24,6 +24,7 @@ const STORE = {
     { id: "frozen-cherries", name: "Frozen Cherries", lineage: "Lemon Cherry Gelato × Curelato × Runtz", image: "assets/frozen-cherries.jpg" },
     { id: "white-walker-og", name: "White Walker OG", lineage: "SFV OG Kush phenotype", image: "assets/white-walker-og.jpg" },
     { id: "frosted-fruit-cakes", name: "Frosted Fruit Cakes", lineage: "Fruity Pebbles OG × Wedding Cake", image: "assets/frosted-fruit-cakes.jpg" },
+    { id: "33-splitter", name: "🇬🇧 33 SPLITTER", lineage: "Gelato #33 × Atom Splitter", image: "assets/33-splitter.jpg" },
   ],
   libraries: {
     extracts: [
