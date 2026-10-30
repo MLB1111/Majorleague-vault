@@ -28,7 +28,10 @@ const STORE = {
   libraries: {
     extracts: [
       { id: "blueberry-zkunk-live-resin", name: "Blueberry Zkunk Live Resin", lineage: "Zkunk × Blucci", image: "https://mlb1111.github.io/Majorleague-vault/assets/blueberry-zkunk-live-resin.jpeg?v=20261023c", label: "EXTRACT PROFILE" },
-      { id: "original-z-live-resin-soil-grown", name: "Original Z Live Resin", lineage: "Soil Grown", image: "https://mlb1111.github.io/Majorleague-vault/assets/original-z-live-resin-soil-grown.jpeg?v=20261023c", label: "EXTRACT PROFILE" }
+      { id: "original-z-live-resin-soil-grown", name: "Original Z Live Resin", lineage: "Soil Grown", image: "https://mlb1111.github.io/Majorleague-vault/assets/original-z-live-resin-soil-grown.jpeg?v=20261023c", label: "EXTRACT PROFILE" },
+      { id: "ozark-live-resin", name: "Ozark Live Resin", lineage: "OZ KUSH × JEALOUSY", image: "https://mlb1111.github.io/Majorleague-vault/assets/ozark-live-resin.jpeg?v=20261030a", label: "EXTRACT PROFILE" },
+      { id: "cream-smoothie-live-resin", name: "Cream Smoothie Live Resin", lineage: "GELONADE × C.R.E.A.M", image: "https://mlb1111.github.io/Majorleague-vault/assets/cream-smoothie-live-resin.jpeg?v=20261030a", label: "EXTRACT PROFILE" },
+      { id: "zangria-live-resin", name: "Zangria Live Resin", lineage: "THIN MINT GSC × ZKITTLEZ", image: "https://mlb1111.github.io/Majorleague-vault/assets/zangria-live-resin.jpeg?v=20261030a", label: "EXTRACT PROFILE" }
     ],
     edibles: [],
     accessories: [],
