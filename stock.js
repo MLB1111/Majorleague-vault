@@ -18,7 +18,15 @@ const STORE = {
     { id: "special-offers", name: "SPECIAL OFFERS", image: "assets/category-special-offers-20261015.jpeg" }
   ],
   strainLibrary: [
-    { id: "33-splitter", name: "🇬🇧 33 SPLITTER", lineage: "Gelato #33 × Atom Splitter", image: "assets/33-splitter.jpg" }
+    { id: "33-splitter", name: "🇬🇧 33 SPLITTER", lineage: "Gelato #33 × Atom Splitter", image: "assets/33-splitter.jpg" },
+    { id: "tokyo-gas", name: "TOKYO GAS", lineage: "Unconfirmed × Unconfirmed", image: "assets/tokyo-gas.jpg" },
+    { id: "perm-x-g41", name: "PERM X G41", lineage: "Perm × Gelato 41", image: "assets/perm-x-g41.jpg" },
+    { id: "skittles-x-og", name: "SKITTLES X OG", lineage: "Zkittlez × OG Kush", image: "assets/skittles-x-og.jpg" },
+    { id: "bubblegum-gelato", name: "BUBBLEGUM GELATO", lineage: "Indiana Bubblegum × Gelato 45", image: "assets/bubblegum-gelato.jpg" },
+    { id: "jet-fuel", name: "JET FUEL", lineage: "Aspen OG × High Country Diesel", image: "assets/jet-fuel.jpg" },
+    { id: "white-runtz", name: "WHITE RUNTZ", lineage: "Zkittlez × Gelato", image: "assets/white-runtz.jpg" },
+    { id: "smoothies", name: "SMOOTHIES", lineage: "Blueberry × Somango", image: "assets/smoothies.jpg" },
+    { id: "toadalatti", name: "TOADALATTI", lineage: "The Toad Gelatti", image: "assets/toadalatti.jpg" }
   ],
   libraries: {
     extracts: [
